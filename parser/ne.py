@@ -1,0 +1,18 @@
+import re
+
+from common import FILES
+
+found = dict[str, str]()
+
+for file_name in FILES:
+    with open(file_name) as file:
+        text = file.read()
+        contexts = re.findall(r"[^.!?…]+ [Нн]е[^ ][^.!?…]+[.!?…]", text)
+        for context in contexts:
+            scontext = str(context).strip()
+            words = re.findall(r" [Нн]е[ ]?[А-я]+", scontext)
+            for word in words:
+                found[str(word).strip().lower()] = scontext
+
+with open("ne.txt", "w", encoding="utf8") as dest:
+    dest.write("\n".join(sorted(f"{k}: {found[k].replace('\n', ' ')}" for k in found)))
