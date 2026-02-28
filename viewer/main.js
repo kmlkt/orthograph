@@ -58,6 +58,9 @@ const Question = ({ right, all, context }, next) => {
 };
 
 const Stat = (right, total) => {
+  if (total === 0) {
+    return "";
+  }
   const percent = Math.ceil((right / total) * 100);
   return div({ class: "stat" }, `${percent}%`);
 };

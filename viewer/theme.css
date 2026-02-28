@@ -28,7 +28,10 @@ p.context {
 
 button {
     background-color: bisque;
-    &:hover {
+}
+
+@media screen and (min-width: 768px) {
+    button:hover {
         background-color: brown;
     }
 }
