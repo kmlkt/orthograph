@@ -1,1 +1,2 @@
-FILES = ["./vim1.txt", "pin.txt"]
+FILES = ["bk", "bulba", "dubr", "dushi", "pin", "shinel", "stanc", "vim12", "vim34"]
+FILES = [f"sources/{x}.txt" for x in FILES]
