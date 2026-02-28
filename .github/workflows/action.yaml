@@ -24,6 +24,7 @@ jobs:
 
       - name: Copy index.html
         run: |
+          mkdir dist
           cp index.html dist/index.html
 
       - name: Copy parsed files
