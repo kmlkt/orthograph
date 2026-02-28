@@ -78,21 +78,24 @@ const Quiz = () => {
 
   return main(
     () => Stat(right.val, total.val),
-    Await({ value: fetch("/parser/ne.txt").then((x) => x.text()) }, (text) => {
-      const lines = text.split("\n");
+    Await(
+      { value: fetch(`${PARSED_FILES}/ne.txt`).then((x) => x.text()) },
+      (text) => {
+        const lines = text.split("\n");
 
-      const randomIndex = () => Math.floor(Math.random() * lines.length);
-      const i = van.state(randomIndex());
+        const randomIndex = () => Math.floor(Math.random() * lines.length);
+        const i = van.state(randomIndex());
 
-      const next = (r) => {
-        incTotal();
-        if (r === true) {
-          incRight();
-        }
-        i.val = randomIndex();
-      };
-      return div(() => Question(prepareNe(lines[i.val]), next));
-    }),
+        const next = (r) => {
+          incTotal();
+          if (r === true) {
+            incRight();
+          }
+          i.val = randomIndex();
+        };
+        return div(() => Question(prepareNe(lines[i.val]), next));
+      },
+    ),
   );
 };
 

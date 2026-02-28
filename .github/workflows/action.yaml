@@ -27,19 +27,19 @@ jobs:
           mkdir dist
           cp index.html dist/index.html
 
-      - name: Copy parsed files
-        run: |
-          parser=$(uuidgen)
-          mkdir dist/$parser
-          cp parser/ne.txt dist/$parser/ne.txt
-          sed -i 's/parser/$parser/g' dist/index.html
-
       - name: Copy js & css
         run: |
           viewer=$(uuidgen)
           mkdir dist/$viewer
           cp -r viewer/ dist/$viewer/
-          sed -i 's/viewer/$viewer/g' dist/index.html
+          sed -i "s/viewer/$viewer/g" dist/index.html
+
+      - name: Copy parsed files
+        run: |
+          parser=$(uuidgen)
+          mkdir dist/$parser
+          cp parser/ne.txt dist/$parser/ne.txt
+          sed -i "s/parser/$parser/g" dist/index.html
 
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3
