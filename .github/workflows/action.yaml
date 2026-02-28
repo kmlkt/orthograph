@@ -31,7 +31,7 @@ jobs:
         run: |
           viewer=$(uuidgen)
           mkdir dist/$viewer
-          cp -r viewer dist/$viewer
+          cp -r viewer/. dist/$viewer/
           sed -i "s/viewer/$viewer/g" dist/index.html
 
       - name: Copy parsed files
