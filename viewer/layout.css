@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+main {
+    padding: 8px;
+}
+
 p,
 div {
     padding-bottom: 24px;
@@ -55,6 +59,7 @@ button {
     main {
         width: 600px;
         margin: auto;
+        padding: 0;
     }
 
     .button-list {
