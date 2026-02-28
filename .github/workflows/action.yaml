@@ -29,13 +29,15 @@ jobs:
 
       - name: Copy parsed files
         run: |
-          parser = $(uuidgen)
+          parser=$(uuidgen)
+          mkdir dist/$parser
           cp parser/ne.txt dist/$parser/ne.txt
           sed -i 's/parser/$parser/g' dist/index.html
 
       - name: Copy js & css
         run: |
-          viewer = $(uuidgen)
+          viewer=$(uuidgen)
+          mkdir dist/$viewer
           cp viewer/ dist/$viewer/
           sed -i 's/viewer/$viewer/g' dist/index.html
 
