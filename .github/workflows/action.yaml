@@ -38,7 +38,7 @@ jobs:
         run: |
           viewer=$(uuidgen)
           mkdir dist/$viewer
-          cp viewer/ dist/$viewer/
+          cp -r viewer/ dist/$viewer/
           sed -i 's/viewer/$viewer/g' dist/index.html
 
       - name: Upload static files as artifact
