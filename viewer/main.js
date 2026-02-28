@@ -11,8 +11,10 @@ const prepareNe = (line) => {
   ];
   const hiddenContext = ` ${context}`
     .replaceAll(new RegExp(`${word}`, "gi"), `<span> ${word}</span>`)
-    .replaceAll(/ не /gi, " не")
-    .replaceAll(/ не/gi, " не?");
+    .replaceAll(" не ", " не")
+    .replaceAll(" Не ", " Не")
+    .replaceAll(" не", " не?")
+    .replaceAll(" Не", " Не?");
 
   const all = [...right, ...wrong];
   all.sort();

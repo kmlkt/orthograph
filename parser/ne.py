@@ -12,7 +12,7 @@ for file_name in FILES:
             scontext = str(context).strip()
             words = re.findall(r" [Нн]е[ ]?[А-я]+", scontext)
             for word in words:
-                found[str(word).strip().lower()] = scontext
+                found["н" + str(word).strip()[1:]] = scontext
 
 with open("ne.txt", "w", encoding="utf8") as dest:
     dest.write("\n".join(sorted(f"{k}: {found[k].replace('\n', ' ')}" for k in found)))
