@@ -16,12 +16,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  parse:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - name: Checkout my repository
+        uses: actions/checkout@v4
+
+      - name: Create exercises directory
+        run: |
+          mkdir exercises
+
+      - name: Parse exercises
+        run: |
+          cd parser
+          python ne.py
+          cd ..
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
-        uses: actions/checkout@v4
-
       - name: Copy index.html
         run: |
           mkdir dist
@@ -34,12 +50,12 @@ jobs:
           cp -r viewer/. dist/$viewer/
           sed -i "s/viewer/$viewer/g" dist/index.html
 
-      - name: Copy parsed files
+      - name: Copy exercises
         run: |
-          parser=$(uuidgen)
-          mkdir dist/$parser
-          cp parser/ne.txt dist/$parser/ne.txt
-          sed -i "s/parser/$parser/g" dist/index.html
+          exercises=$(uuidgen)
+          mkdir dist/$exercises
+          cp -r exercises/. dist/$exercises/
+          sed -i "s/exercises/$exercises/g" dist/index.html
 
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3

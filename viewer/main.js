@@ -84,7 +84,7 @@ const Quiz = () => {
   return main(
     () => Stat(right.val, total.val),
     Await(
-      { value: fetch(`${PARSED_FILES}/ne.txt`).then((x) => x.text()) },
+      { value: fetch(`${EXERCISE_FILES}/ne.txt`).then((x) => x.text()) },
       (text) => {
         const lines = text.split("\n");
 

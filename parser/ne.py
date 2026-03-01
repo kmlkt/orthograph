@@ -1,6 +1,6 @@
 import re
 
-from common import FILES
+from common import FILES, exercise
 
 found = dict[str, str]()
 
@@ -14,5 +14,5 @@ for file_name in FILES:
             for word in words:
                 found["н" + str(word).strip()[1:]] = scontext
 
-with open("ne.txt", "w", encoding="utf8") as dest:
+with open(exercise("ne"), "w", encoding="utf8") as dest:
     dest.write("\n".join(sorted(f"{k}: {found[k].replace('\n', ' ')}" for k in found)))
