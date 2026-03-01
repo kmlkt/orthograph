@@ -3,10 +3,16 @@
     line-height: 24px;
     margin: 0;
     box-sizing: border-box;
+    border: 0;
 }
 
 main {
-    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    p {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 }
 
 p,
@@ -48,11 +54,26 @@ div {
 }
 
 button {
+    line-height: 32px;
     height: 40px;
     font-size: 24px;
     font-weight: 600;
-    padding: 0px 16px 8px 16px;
-    border: 0;
+    padding: 0 0 8px 0;
+    text-align: center;
+}
+
+select {
+    line-height: 32px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0 0 8px 0;
+    text-align: center;
+    appearance: none;
+    background-image: url("./arrow-down.svg");
+    background-position: right 8px center;
+    background-size: 16px;
+    background-repeat: no-repeat;
 }
 
 @media screen and (min-width: 768px) {

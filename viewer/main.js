@@ -1,4 +1,4 @@
-const { main, button, div, pre, span, p } = van.tags;
+const { main, button, div, pre, span, p, select, option } = van.tags;
 
 const Question = ({ right, options, context }, next) => {
   const checked = van.state(false);
@@ -44,9 +44,37 @@ const Stat = (right, total) => {
   return div({ class: "stat" }, `${percent}%`);
 };
 
+const RULES = {
+  ne: "Не слитно / раздельно",
+  pre: "Пре / при",
+};
+
+const Picker = (rule) =>
+  select(
+    {
+      onchange: (e) => {
+        rule.val = e.target.value;
+      },
+    },
+    Object.keys(RULES).map((x) =>
+      option({ value: x, selected: x === rule.val }, RULES[x]),
+    ),
+  );
+
+const __CACHE = {};
+
+const cached_fetch = async (path) => {
+  if (!(path in __CACHE)) {
+    const resp = await fetch(path);
+    __CACHE[path] = await resp.json();
+  }
+  return __CACHE[path];
+};
+
 const Quiz = () => {
   const right = van.state(parseInt(localStorage.getItem("right") ?? "0", 10));
   const total = van.state(parseInt(localStorage.getItem("total") ?? "0", 10));
+  const rule = van.state("pre");
 
   const incRight = () => {
     right.val++;
@@ -59,23 +87,28 @@ const Quiz = () => {
   };
 
   return main(
+    Picker(rule),
     () => Stat(right.val, total.val),
-    Await(
-      { value: fetch(`${EXERCISE_FILES}/ne.json`).then((x) => x.json()) },
-      (questions) => {
-        const randomIndex = () => Math.floor(Math.random() * questions.length);
-        const i = van.state(randomIndex());
+    () =>
+      Await(
+        {
+          value: cached_fetch(`${EXERCISE_FILES}/${rule.val}.json`),
+        },
+        (questions) => {
+          const randomIndex = () =>
+            Math.floor(Math.random() * questions.length);
+          const i = van.state(randomIndex());
 
-        const next = (r) => {
-          incTotal();
-          if (r === true) {
-            incRight();
-          }
-          i.val = randomIndex();
-        };
-        return div(() => Question(questions[i.val], next));
-      },
-    ),
+          const next = (r) => {
+            incTotal();
+            if (r === true) {
+              incRight();
+            }
+            i.val = randomIndex();
+          };
+          return div(() => Question(questions[i.val], next));
+        },
+      ),
   );
 };
 

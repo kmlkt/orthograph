@@ -26,7 +26,8 @@ p.context {
     font-weight: 600;
 }
 
-button {
+button,
+select {
     background-color: bisque;
 }
 
