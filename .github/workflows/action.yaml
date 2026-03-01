@@ -1,4 +1,4 @@
-name: Deploy static site to GitHub Pages
+name: Deploy site to GitHub Pages
 
 on:
   push:
@@ -35,10 +35,22 @@ jobs:
           python ne.py
           cd ..
 
+      - uses: actions/upload-artifact@v7
+        with:
+          name: exercises
+          path: exercises/
+
   prepare:
     runs-on: ubuntu-latest
     needs: parse
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: exercises
+          path: exercises/
+
       - name: Copy index.html
         run: |
           mkdir dist
@@ -58,8 +70,7 @@ jobs:
           cp -r exercises/. dist/$exercises/
           sed -i "s/exercises/$exercises/g" dist/index.html
 
-      - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
 
@@ -70,5 +81,4 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare
     steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
