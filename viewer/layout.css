@@ -13,11 +13,7 @@ main {
         padding-left: 8px;
         padding-right: 8px;
     }
-}
-
-p,
-div {
-    padding-bottom: 24px;
+    gap: 24px;
 }
 
 .actions {
