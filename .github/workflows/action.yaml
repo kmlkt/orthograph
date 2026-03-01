@@ -67,7 +67,7 @@ jobs:
         run: |
           mkdir lib
           curl -o lib/van-1.6.0.nomodule.min.js https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.6.0.nomodule.min.js
-          curl -o lib/van-ui.nomodule.min.js https://cdn.jsdelivr.net/npm/vanjs-ui@0.11.14/dist/van-ui.nomodule.min.js
+          curl -o lib/van-ui-0.11.14.nomodule.min.js https://cdn.jsdelivr.net/npm/vanjs-ui@0.11.14/dist/van-ui.nomodule.min.js
 
       - name: Copy libraries
         run: |
