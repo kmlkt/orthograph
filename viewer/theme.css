@@ -11,6 +11,7 @@ p.context {
     span {
         color: red;
         font-weight: 600;
+        text-wrap: nowrap;
     }
 }
 
@@ -29,6 +30,14 @@ p.context {
 button,
 select {
     background-color: bisque;
+}
+
+select {
+    appearance: none;
+    background-image: url("./arrow-down.svg");
+    background-position: right 8px center;
+    background-size: 16px;
+    background-repeat: no-repeat;
 }
 
 @media screen and (min-width: 768px) {

@@ -19,20 +19,23 @@ const Question = ({ right, options, context }, next) => {
       innerHTML: context.replaceAll("[", "<span>").replaceAll("]", "</span>"),
       class: "context",
     }),
-    () =>
-      div(
-        { class: "button-list near-bottom" },
-        options.map((w) =>
-          button({ class: buttonClass(w), onclick: () => check(w) }, w),
+    div(
+      { class: "actions" },
+      () =>
+        div(
+          { class: "button-list" },
+          options.map((w) =>
+            button({ class: buttonClass(w), onclick: () => check(w) }, w),
+          ),
         ),
-      ),
-    () =>
-      checked.val
-        ? div(
-            { class: "button-list bottom" },
-            button({ onclick: () => next(false) }, "Продолжить"),
-          )
-        : "",
+      () =>
+        checked.val
+          ? div(
+              { class: "button-list" },
+              button({ onclick: () => next(false) }, "Продолжить"),
+            )
+          : "",
+    ),
   );
 };
 
@@ -106,7 +109,7 @@ const Quiz = () => {
             }
             i.val = randomIndex();
           };
-          return div(() => Question(questions[i.val], next));
+          return Question(questions[i.val], next);
         },
       ),
   );

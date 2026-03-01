@@ -9,38 +9,36 @@
 main {
     display: flex;
     flex-direction: column;
+    gap: 24px;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+    }
+
     p {
         padding-left: 8px;
         padding-right: 8px;
     }
-    gap: 24px;
 }
 
 .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: 176px;
     position: fixed;
     bottom: 0;
-    right: 0;
     left: 0;
+    right: 0;
 }
 
 .button-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
-
-    &.near-bottom {
-        position: fixed;
-        bottom: 64px;
-        right: 0;
-        left: 0;
-    }
-
-    &.bottom {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        left: 0;
-    }
 }
 
 .stat {
@@ -49,15 +47,7 @@ main {
     font-weight: 600;
 }
 
-button {
-    line-height: 32px;
-    height: 40px;
-    font-size: 24px;
-    font-weight: 600;
-    padding: 0 0 8px 0;
-    text-align: center;
-}
-
+button,
 select {
     line-height: 32px;
     height: 40px;
@@ -65,11 +55,6 @@ select {
     font-weight: 600;
     padding: 0 0 8px 0;
     text-align: center;
-    appearance: none;
-    background-image: url("./arrow-down.svg");
-    background-position: right 8px center;
-    background-size: 16px;
-    background-repeat: no-repeat;
 }
 
 @media screen and (min-width: 768px) {
@@ -83,15 +68,14 @@ select {
         min-height: 200px;
     }
 
+    .actions {
+        position: static;
+    }
+
     .button-list {
         flex-direction: row;
         button {
             flex-grow: 1;
-        }
-
-        &.near-bottom,
-        &.bottom {
-            position: static;
         }
     }
 
