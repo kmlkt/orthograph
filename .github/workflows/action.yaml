@@ -33,6 +33,7 @@ jobs:
         run: |
           cd parser
           python ne.py
+          python pre.py
           cd ..
 
       - uses: actions/upload-artifact@v7
