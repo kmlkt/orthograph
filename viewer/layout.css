@@ -62,6 +62,10 @@ button {
         padding: 0;
     }
 
+    p.context {
+        min-height: 200px;
+    }
+
     .button-list {
         flex-direction: row;
         button {

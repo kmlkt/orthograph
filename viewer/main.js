@@ -1,32 +1,6 @@
 const { main, button, div, pre, span, p } = van.tags;
 
-const prepareNe = (line) => {
-  const [word, ...contextSplit] = line.split(": ");
-  const context = contextSplit.join(": ");
-  const right = [word];
-  const wrong = [
-    word.startsWith("не ")
-      ? word.replace("не ", "не")
-      : word.replace("не", "не "),
-  ];
-  const hiddenContext = ` ${context}`
-    .replaceAll(new RegExp(`${word}`, "gi"), `<span> ${word}</span>`)
-    .replaceAll(" не ", " не")
-    .replaceAll(" Не ", " Не")
-    .replaceAll(" не", " не?")
-    .replaceAll(" Не", " Не?");
-
-  const all = [...right, ...wrong];
-  all.sort();
-
-  return {
-    right,
-    all,
-    context: hiddenContext,
-  };
-};
-
-const Question = ({ right, all, context }, next) => {
+const Question = ({ right, options, context }, next) => {
   const checked = van.state(false);
 
   const check = (word) => {
@@ -41,11 +15,14 @@ const Question = ({ right, all, context }, next) => {
     checked.val ? (right.includes(word) ? "right" : "wrong") : "";
 
   return div(
-    p({ innerHTML: context, class: "context" }),
+    p({
+      innerHTML: context.replaceAll("[", "<span>").replaceAll("]", "</span>"),
+      class: "context",
+    }),
     () =>
       div(
         { class: "button-list near-bottom" },
-        all.map((w) =>
+        options.map((w) =>
           button({ class: buttonClass(w), onclick: () => check(w) }, w),
         ),
       ),
@@ -84,11 +61,9 @@ const Quiz = () => {
   return main(
     () => Stat(right.val, total.val),
     Await(
-      { value: fetch(`${EXERCISE_FILES}/ne.txt`).then((x) => x.text()) },
-      (text) => {
-        const lines = text.split("\n");
-
-        const randomIndex = () => Math.floor(Math.random() * lines.length);
+      { value: fetch(`${EXERCISE_FILES}/ne.json`).then((x) => x.json()) },
+      (questions) => {
+        const randomIndex = () => Math.floor(Math.random() * questions.length);
         const i = van.state(randomIndex());
 
         const next = (r) => {
@@ -98,7 +73,7 @@ const Quiz = () => {
           }
           i.val = randomIndex();
         };
-        return div(() => Question(prepareNe(lines[i.val]), next));
+        return div(() => Question(questions[i.val], next));
       },
     ),
   );
