@@ -1,16 +1,35 @@
 import itertools
 import json
 import re
+from typing import Iterable, Tuple
 
 from common import exercise, files
 
 
 def ignore_list(rule):
-    with open(f"{rule}_ignore.txt", encoding="utf8") as file:
+    with open(f"../ignore/{rule}.txt", encoding="utf8") as file:
         return [x.strip() for x in file.readlines()]
 
 
-def parse(rule, _ignore, word_re, to_common: list, to_options: list):
+def find_pattern(text: str, pattern: str):
+    pass
+
+
+def find_patterns(text, patterns):
+    pass
+
+
+def parse(
+    rule,
+    _ignore,
+    common: Iterable[str],
+    to_options: list[Tuple[str, str]],
+):
+    to_common = [
+        *itertools.chain(
+            *([(x.replace(y, z), x) for y, z in to_options] for x in common)
+        )
+    ]
     found = {}
 
     def need_ignore(word):
@@ -26,18 +45,24 @@ def parse(rule, _ignore, word_re, to_common: list, to_options: list):
             sentence = sentence.strip().strip("—–").strip().replace("\n", " ")
             modsentence = sentence
 
-            words = [str(x).strip() for x in re.findall(word_re, f" {sentence}")]
+            words = []
 
-            words = [x for x in words if not need_ignore(x)]
+            if len(words) == 0:
+                continue
 
-            if "него" in words:
-                print("Asas")
+            words = [
+                x
+                for x in words
+                if not need_ignore(x) and any(k in f"^{x}$" for k, _ in to_common)
+            ]
 
             for word in words:
                 if word not in mod:
                     mod[word] = f"^{word}$"
                     for k, v in to_common:
-                        mod[word] = mod[word].replace(k, v)
+                        if k in mod[word]:
+                            mod[word] = mod[word].replace(k, v)
+                            break
                     mod[word] = mod[word][1:-1]
                 modsentence = modsentence.replace(word, mod[word])
 
@@ -58,5 +83,13 @@ def write(rule, exercises):
         json.dump(exercises, dest, ensure_ascii=False)
 
 
-def normal_flow(rule, word_re, to_common: list, to_options: list):
-    write(rule, parse(rule, ignore_list(rule), word_re, to_common, to_options))
+def normal_parse(
+    rule, word_re, common: Iterable[str], to_options: list[Tuple[str, str]]
+):
+    return parse(rule, ignore_list(rule), word_re, common, to_options)
+
+
+def normal_handle(
+    rule, word_re, common: Iterable[str], to_options: list[Tuple[str, str]]
+):
+    write(rule, normal_parse(rule, word_re, common, to_options))

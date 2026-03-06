@@ -1,20 +1,9 @@
-from word import normal_flow
+from common import with_upper
+from word import normal_handle
 
-TO_COMMON = [
-    ("^Не ", "^Не"),
-    ("^Не", "^Не?"),
-    ("^Ни ", "^Ни"),
-    ("^Ни", "^Ни?"),
-    ("^не ", "^не"),
-    ("^не", "^не?"),
-    ("^ни ", "^ни"),
-    ("^ни", "^ни?"),
-]
-
-
-normal_flow(
+normal_handle(
     "ne",
     r" [Нн][еи][ ]?[А-яё]+",
-    TO_COMMON,
-    [("?", ""), ("?", " ")],
+    with_upper("^не?", "^ни?"),
+    [("?", " "), ("?", "")],
 )

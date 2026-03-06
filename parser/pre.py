@@ -1,16 +1,9 @@
-from word import normal_flow
+from common import with_upper
+from word import normal_handle
 
-TO_COMMON = [
-    ("^Пре", "^Пр?"),
-    ("^При", "^Пр?"),
-    ("^пре", "^пр?"),
-    ("^при", "^пр?"),
-]
-
-
-normal_flow(
+normal_handle(
     "pre",
     r" [Пп]р[еи][А-яё]+",
-    TO_COMMON,
+    with_upper("^пр?"),
     [("?", "е"), ("?", "и")],
 )

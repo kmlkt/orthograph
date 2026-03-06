@@ -50,6 +50,7 @@ const Stat = (right, total) => {
 const RULES = {
   ne: "Не слитно / раздельно",
   pre: "Пре / при",
+  root: "Корни с чередованием",
 };
 
 const Picker = (rule) =>
@@ -101,7 +102,7 @@ const Quiz = () => {
           const randomIndex = () =>
             Math.floor(Math.random() * questions.length);
           const i = van.state(randomIndex());
-
+          console.log(questions.length);
           const next = (r) => {
             incTotal();
             if (r === true) {
