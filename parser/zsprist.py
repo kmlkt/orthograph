@@ -10,10 +10,7 @@ def zs_common(prist):
 
 def zs_regex(forms: list[str], replace: list[str]):
     return f" [А-яё]*{
-        list_regex(
-            f'[{x[0].upper()}{x[0]}]{x[1:].replace('?', list_regex(replace))}'
-            for x in forms
-        )
+        list_regex(f'{x.replace('?', list_regex(replace))}' for x in forms)
     }[бвгджзклмнпрстфхцчшщ][А-яё]*"
 
 

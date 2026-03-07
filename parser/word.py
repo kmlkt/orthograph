@@ -39,7 +39,10 @@ def parse(
             sentence = sentence.strip().strip("—–").strip().replace("\n", " ")
             modsentence = sentence
 
-            words = [str(x).strip() for x in re.findall(word_re, f" {sentence}")]
+            words = [
+                str(x).strip()
+                for x in re.findall(word_re, f" {sentence}", flags=re.IGNORECASE)
+            ]
 
             if len(words) == 0:
                 continue
