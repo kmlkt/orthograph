@@ -11,6 +11,9 @@ def ignore_list(rule):
         return [x.strip() for x in file.readlines()]
 
 
+SENTENCE_SEPARATOR = re.compile(r"[.!?()\[\]«»$]")
+
+
 def parse(
     rule,
     _ignore,
@@ -32,17 +35,16 @@ def parse(
     def to_key(word):
         return f"{word[0].lower()}{word[1:]}"
 
+    word_pattern = re.compile(word_re, flags=re.IGNORECASE)
+
     for text in files():
         mod = dict[str, str]()
-        sentences = re.split(r"[.!?()\[\]«»$]", text)
+        sentences = SENTENCE_SEPARATOR.split(text)
         for sentence in sentences:
             sentence = sentence.strip().strip("—–").strip().replace("\n", " ")
             modsentence = sentence
 
-            words = [
-                str(x).strip()
-                for x in re.findall(word_re, f" {sentence}", flags=re.IGNORECASE)
-            ]
+            words = [str(x).strip() for x in word_pattern.findall(f" {sentence}")]
 
             if len(words) == 0:
                 continue
