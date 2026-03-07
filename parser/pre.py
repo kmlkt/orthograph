@@ -3,7 +3,7 @@ from word import normal_handle
 
 normal_handle(
     "pre",
-    r" [Пп]р[еи][А-яё]+",
+    r" пр[еи][А-яё]+",
     with_upper("^пр?"),
     [("?", "е"), ("?", "и")],
 )

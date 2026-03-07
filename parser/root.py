@@ -12,10 +12,7 @@ def root_common(roots: list[str]):
 
 def root_regex(forms: list[str], replace: list[str]):
     return f" [А-яё]*{
-        list_regex(
-            f'[{x[0].upper()}{x[0]}]{x[1:].replace('?', list_regex(replace))}'
-            for x in forms
-        )
+        list_regex(f'{x.replace('?', list_regex(replace))}' for x in forms)
     }[А-яё]*"
 
 
