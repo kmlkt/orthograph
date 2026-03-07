@@ -25,9 +25,10 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Create exercises directory
+      - name: Recreate ignored directories
         run: |
           mkdir exercises
+          mkdir debug
 
       - name: Parse exercises
         run: |
