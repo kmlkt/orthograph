@@ -1,6 +1,4 @@
-from typing import Iterable
-
-from common import str_product, with_upper
+from common import list_regex, str_product, with_upper
 from prist import PRIST
 from word import normal_parse, save
 
@@ -10,10 +8,6 @@ EI = ["е", "и"]
 
 def root_common(roots: list[str]):
     return with_upper(*str_product(["^"], PRIST, roots))
-
-
-def list_regex(options: Iterable[str]):
-    return f"(?:{'|'.join(options)})"
 
 
 def root_regex(forms: list[str], replace: list[str]):

@@ -51,6 +51,7 @@ const RULES = {
   ne: "Не слитно / раздельно",
   pre: "Пре / при",
   root: "Корни с чередованием",
+  zsprist: "З / c в приставках",
 };
 
 const Picker = (rule) =>
@@ -78,7 +79,7 @@ const cached_fetch = async (path) => {
 const Quiz = () => {
   const right = van.state(parseInt(localStorage.getItem("right") ?? "0", 10));
   const total = van.state(parseInt(localStorage.getItem("total") ?? "0", 10));
-  const rule = van.state("pre");
+  const rule = van.state("ne");
 
   const incRight = () => {
     right.val++;

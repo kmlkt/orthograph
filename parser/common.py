@@ -1,4 +1,5 @@
 from itertools import product
+from typing import Iterable
 
 FILES = ["bk", "bulba", "dubr", "dushi", "pin", "shinel", "stanc", "vim12", "vim34"]
 FILES = [f"../sources/{x}.txt" for x in FILES]
@@ -29,3 +30,7 @@ def with_upper(*words: str):
     for word in words:
         yield first_upper(word)
         yield word
+
+
+def list_regex(options: Iterable[str]):
+    return f"(?:{'|'.join(options)})"
