@@ -41,7 +41,7 @@ def parse(
         mod = dict[str, str]()
         sentences = SENTENCE_SEPARATOR.split(text)
         for sentence in sentences:
-            sentence = sentence.strip(" —–,;").replace("\n", " ")
+            sentence = sentence.strip().strip("—–,;").strip().replace("\n", " ")
             modsentence = sentence
 
             words = [str(x).strip() for x in word_pattern.findall(f" {sentence}")]
