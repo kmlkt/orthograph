@@ -34,6 +34,7 @@ jobs:
           cd parser
           python ne.py
           python pre.py
+          python root.py
           cd ..
 
       - uses: actions/upload-artifact@v7
