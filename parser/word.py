@@ -11,20 +11,14 @@ def ignore_list(rule):
         return [x.strip() for x in file.readlines()]
 
 
-def find_pattern(text: str, pattern: str):
-    pass
-
-
-def find_patterns(text, patterns):
-    pass
-
-
 def parse(
     rule,
     _ignore,
+    word_re,
     common: Iterable[str],
     to_options: list[Tuple[str, str]],
 ):
+    common = list(common)
     to_common = [
         *itertools.chain(
             *([(x.replace(y, z), x) for y, z in to_options] for x in common)
@@ -45,7 +39,7 @@ def parse(
             sentence = sentence.strip().strip("—–").strip().replace("\n", " ")
             modsentence = sentence
 
-            words = []
+            words = [str(x).strip() for x in re.findall(word_re, f" {sentence}")]
 
             if len(words) == 0:
                 continue
@@ -55,6 +49,9 @@ def parse(
                 for x in words
                 if not need_ignore(x) and any(k in f"^{x}$" for k, _ in to_common)
             ]
+
+            if len(words) == 0:
+                continue
 
             for word in words:
                 if word not in mod:
@@ -78,13 +75,30 @@ def parse(
     return list(found.values())
 
 
-def write(rule, exercises):
+def write_json(rule, exercises):
     with open(exercise(rule), "w", encoding="utf8") as dest:
         json.dump(exercises, dest, ensure_ascii=False)
 
 
+def collect(exercises):
+    return sorted(set((x["right"][0] for x in exercises)))
+
+
+def write_words(words):
+    with open("../debug/words.txt", "w", encoding="utf8") as dest:
+        dest.writelines(f"{x}\n" for x in words)
+
+
+def save(rule, exercises):
+    write_json(rule, exercises)
+    write_words(collect(exercises))
+
+
 def normal_parse(
-    rule, word_re, common: Iterable[str], to_options: list[Tuple[str, str]]
+    rule,
+    word_re,
+    common: Iterable[str],
+    to_options: list[Tuple[str, str]],
 ):
     return parse(rule, ignore_list(rule), word_re, common, to_options)
 
@@ -92,4 +106,5 @@ def normal_parse(
 def normal_handle(
     rule, word_re, common: Iterable[str], to_options: list[Tuple[str, str]]
 ):
-    write(rule, normal_parse(rule, word_re, common, to_options))
+    exercises = normal_parse(rule, word_re, common, to_options)
+    save(rule, exercises)

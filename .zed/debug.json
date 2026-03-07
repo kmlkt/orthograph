@@ -1,9 +1,19 @@
 [
   {
+    "label": "python parser",
     "adapter": "Debugpy",
     "request": "launch",
     "program": "${ZED_FILE}",
-    "label": "Debug",
+    "cwd": "${ZED_WORKTREE_ROOT}\\parser",
+  },
+  {
+    "label": "parser",
+    "adapter": "Delve",
+    "request": "launch",
+    "mode": "debug",
+    "program": ".",
     "cwd": "${ZED_WORKTREE_ROOT}/parser",
+    "args": [],
+    "buildFlags": [],
   },
 ]

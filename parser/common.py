@@ -18,10 +18,14 @@ def str_product(*groups):
     return ("".join(x) for x in product(*groups))
 
 
+def first_upper(word: str):
+    if word.startswith("^"):
+        return "^" + word[1].upper() + word[2:]
+    else:
+        return word[0].upper() + word[1:]
+
+
 def with_upper(*words: str):
     for word in words:
-        if word.startswith("^"):
-            yield "^" + word[1].upper() + word[2:]
-        else:
-            yield word[0].upper() + word[1:]
+        yield first_upper(word)
         yield word
