@@ -36,6 +36,7 @@ jobs:
           python ne.py
           python pre.py
           python root.py
+          python zsprist.py
           cd ..
 
       - uses: actions/upload-artifact@v7
